@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Srinath S Portfolio</title>
+  <style>
+    :root {
+      --primary: #0ea5e9;      /* Cyan for titles */
+      --accent1: #6366f1;
+      --accent2: #0f172a;
+      --white: #f1f5f9;
+      --dark: #23272e;
+      --gray-dark: #334155;
+      --gray-light: #64748b;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(120deg, var(--accent2) 0%, var(--primary) 70%, var(--accent1) 100%);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+    a { color: var(--primary); text-decoration: none; transition: color .2s;}
+    a:hover { text-decoration: underline; color: var(--accent1);}
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,23,42,0.93);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.30);
+      padding: 1rem 1rem;
+      display: flex; flex-direction: column; align-items: center;
+      backdrop-filter: blur(3px);
+    }
+    .logo {
+      font-size: 1.75rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, var(--primary), var(--accent1));
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      margin-bottom: .1rem;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap; gap: 1.2rem;
+      margin-bottom: .4rem;
+    }
+    .nav-link {
+      font-weight: 500; letter-spacing: .01em;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      display: block;
+      width: 0; height: 2px;
+      background: var(--primary);
+      transition: width .2s;
+      margin: 0 auto;
+    }
+    .nav-link:hover::after {width: 100%;}
+    .section {
+      width: 94%; max-width: 700px;
+      margin: 2rem auto;
+      padding: 1.3rem 1rem;
+      border-radius: 1.2rem;
+      background: rgba(22,31,49,0.95);
+      box-shadow: 0 2px 14px rgba(15,23,42,0.17);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .7s cubic-bezier(.77, 0, .175, 1), transform .7s cubic-bezier(.77, 0, .175, 1);
+      color: var(--white);
+    }
+    .section.in-view { opacity: 1; transform: none;}
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 1.1rem;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: .04em;
+      text-align: left;
+      color: var(--primary);
+      text-shadow: 0 2px 6px rgba(0,0,0,.33);
+    }
+    .about-section .section-title,
+    .about-section h3,
+    .soft-skills-title,
+    .projects-section .section-title {
+      color: var(--primary);
+      font-weight: bold;
+      text-align:left;
+    }
+    .about-section h3 {
+      font-size: 1.27rem;
+      margin-top: 1.3rem;
+      margin-bottom: .6rem;
+    }
+    .soft-skills-title {
+      font-size: 1.27rem;
+      margin-top: 1.5rem;
+      margin-bottom: .6rem;
+    }
+    .projects-section .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+    .projects-section h3 {
+      color: var(--primary);
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: .5rem;
+    }
+    .home-section h1 {
+      font-size: 2.1rem; margin-bottom: .8rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent1));
+      color: transparent; background-clip: text; -webkit-background-clip: text;
+    }
+    .home-section p {font-size: 1.15rem; margin-bottom: 1.5rem;}
+    .btn {
+      background: linear-gradient(90deg, var(--primary), var(--accent2));
+      color: var(--dark);
+      padding: .75rem 1.5rem;
+      border-radius: .55rem;
+      border: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: background .25s, color .25s;
+      box-shadow: 0 2px 8px rgba(56,189,248,.08);
+      margin-top: .7rem;
+    }
+    .btn:hover { background: linear-gradient(90deg, var(--accent1), var(--primary)); color: var(--white); }
+    .about-section ul, .soft-skills { list-style: none; padding: 0;}
+    .about-section ul li,
+    .soft-skills li {
+      font-size: 1.1rem;
+      margin-bottom: .6rem;
+      display: flex; align-items: center;
+      animation: fadeInLeft .8s cubic-bezier(.77,0,.175,1);
+      color: var(--white);
+      font-weight: 500;
+    }
+    .soft-skills li {
+      animation: fadeInRight .8s cubic-bezier(.77,0,.175,1);
+    }
+    .about-section ul li .icon, .soft-skills li .icon { margin-right: .7rem;}
+
+    @keyframes fadeInLeft {
+      from { opacity:0; transform: translateX(-28px);}
+      to { opacity:1; transform:none;}
+    }
+    @keyframes fadeInRight {
+      from { opacity:0; transform: translateX(28px);}
+      to { opacity:1; transform:none;}
+    }
+    .project-card {
+      background: linear-gradient(90deg, var(--gray-dark) 70%, var(--accent1) 140%);
+      padding: 1.15rem;
+      border-radius: .55rem;
+      margin-bottom: 1.35rem;
+      transition: transform .25s, box-shadow .28s;
+      box-shadow: 0 2px 6px rgba(0,0,0,.196);
+      color: var(--white);
+    }
+    .project-card:hover { transform: translateY(-5px) scale(1.025); box-shadow: 0 6px 28px rgba(0,0,0,0.19);}
+    .project-card .tech { font-size: .97rem; color: var(--gray-light); margin-bottom: .85rem; }
+    /* Two box layout for contact details */
+    .contact-card-group {
+      display: flex;
+      gap:2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top:1.8rem;
+    }
+    .contact-card {
+      background: rgba(22,31,49,0.97);
+      border-radius: 1.1rem;
+      padding: 1.2rem 1.1rem .8rem 1.1rem;
+      min-width:250px;
+      max-width:350px;
+      box-shadow: 0 3px 20px #0ea5e93a;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+      font-size: 1.08rem;
+    }
+    .contact-card h3 {
+      text-align:center;
+      font-size:1.17rem;
+      color: var(--primary);
+      font-weight: bold;
+      margin-bottom:1rem;
+      margin-top:0;
+    }
+    .contact-list {list-style:none;padding:0;}
+    .contact-list li {
+      margin-bottom: .7rem;
+      word-break: break-all;
+    }
+    .contact-list a {
+      color: var(--primary);
+    }
+    .contact-list a:hover {
+      color: var(--accent1);
+    }
+    footer {
+      text-align: center;
+      padding: 1.4rem 0;
+      color: var(--gray-light);
+      background: rgba(15,23,42,0.73);
+      font-size: 1.01rem;
+      border-top-left-radius: .95rem;
+      border-top-right-radius: .95rem;
+      margin: 0 auto;
+      max-width: 650px;
+    }
+
+    @media (max-width:750px){
+      .contact-card-group {flex-direction:column; align-items:center;}
+      .contact-card{width:100%;max-width:340px;}
+    }
+    @media (min-width:700px) {
+      .navbar {flex-direction: row; justify-content: space-between; padding: 1rem 3rem;}
+      .logo {margin-bottom: 0;}
+      .section {max-width:900px;margin:3rem auto;padding:2rem;}
+      .home-section h1 {font-size:2.7rem;}
+      .nav-links {gap:1.9rem;}
+      footer {max-width:900px;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <h1 class="logo">Srinath S</h1>
+    <div class="nav-links">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+  <main>
+    <section id="home" class="section home-section">
+      <h1>Hi, I’m Srinath S</h1>
+      <p>Aspiring Software Test Engineer & MERN Stack Developer</p>
+      <a href="Srinath_SoftwareTest_Resume.pdf" download class="btn">Download Resume</a>
+    </section>
+    <section id="about" class="section about-section">
+      <h2 class="section-title">About Me</h2>
+      <p>
+        I’m a Computer Science and Engineering student at Bannari Amman Institute of Technology (2021–2025).
+        I enjoy combining full-stack development with software testing automation to build reliable, efficient solutions.
+      </p>
+      <h3 class="section-title">Technical Skills</h3>
+      <ul>
+        <li><span class="icon">➡️</span> Python, C, C++, JavaScript (React, Node.js)</li>
+        <li><span class="icon">➡️</span> MongoDB, SQL, Docker, Jenkins, Git/Gerrit</li>
+        <li><span class="icon">➡️</span> Software Testing & Automation (Python-based frameworks)</li>
+      </ul>
+      <h3 class="section-title soft-skills-title">Soft Skills</h3>
+      <ul class="soft-skills">
+        <li><span class="icon">➡️</span> Team Collaboration</li>
+        <li><span class="icon">➡️</span> Problem Solving</li>
+        <li><span class="icon">➡️</span> Analytical Thinking</li>
+        <li><span class="icon">➡️</span> Communication</li>
+      </ul>
+    </section>
+    <section id="projects" class="section projects-section">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-card">
+        <h3>E-Commerce Platform (MERN + Testing)</h3>
+        <p>Developed a full-stack e-commerce system using React, Node.js, and MongoDB with automated Python tests for order and payment validation.</p>
+        <p class="tech">Tech: React, Node.js, MongoDB, Python, Jenkins</p>
+        <a href="https://github.com/Srinath117" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+      <div class="project-card">
+        <h3>Skin Disease Prediction (Machine Learning)</h3>
+        <p>Built a CNN-based model using TensorFlow (EfficientNet) for skin disease detection with preprocessing automation and dataset validation.</p>
+        <p class="tech">Tech: Python, TensorFlow, EfficientNet, Pandas</p>
+        <a href="https://github.com/Srinath117" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+    </section>
+    <section id="contact" class="section contact-section">
+      <h2 class="section-title">Contact Details</h2>
+      <div class="contact-card-group">
+        <div class="contact-card">
+          <ul class="contact-list">
+            <li>
+              Email:
+              <a href="mailto:srinath733572@gmail.com">srinath733572@gmail.com</a>
+            </li>
+            <li>Phone: +91 9789294712</li>
+          </ul>
+          <ul class="contact-list">
+            <li>
+              LinkedIn:
+              <a href="http://linkedin.com/in/srinath-s-04777a26a" target="_blank" rel="noopener">
+                linkedin.com/in/srinath-s-04777a26a
+              </a>
+            </li>
+            <li>
+              GitHub:
+              <a href="https://github.com/Srinath117" target="_blank" rel="noopener">github.com/Srinath117</a>
+            </li>
+          </ul>
+        </div>
+    </section>
+  </main>
+  <footer>
+    © 2025 Srinath S — Built with HTML, CSS & JS
+  </footer>
+  <script>
+    // animate all sections entering viewport
+    function revealElements() {
+      const sections = document.querySelectorAll('.section');
+      const trigger = window.innerHeight * 0.93;
+      sections.forEach(section => {
+        if (section.getBoundingClientRect().top < trigger) {
+          section.classList.add('in-view');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealElements);
+    window.addEventListener('resize', revealElements);
+    window.addEventListener('DOMContentLoaded', revealElements);
+  </script>
+</body>
+</html>
